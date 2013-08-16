@@ -26,7 +26,7 @@ public:
 
 private:
 	void createChar( int iCharID );
-	void createChar2( int iCharID );
+	//void createChar2( int iCharID );
 
 	FT_Library _FTLib;
 	FT_Face _FTFace;

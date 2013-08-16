@@ -78,7 +78,7 @@ void RenderInstance( const ModelInstance& instance )
 	light.fAmbientIntensity = 0.1f;
 	light.fDiffuseIntensity = 0.6f;
 	light.v3Color = glm::vec3( 1.f, 1.f, 204.f / 255.f );
-	light.v3Direction = glm::vec3( -0.652354f, -0.510654f, 0.560060f );
+	light.v3Direction = glm::vec3( -0.659189, -0.534744, -0.528695 );
 	shader->setUniform( "g_DirectionalLight", light );
 
 	if( asset->mesh != NULL )
@@ -124,7 +124,7 @@ int main( void )
 	glfwSetInputMode( window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN );
 
 	//VSYNC?:
-	//glfwSwapInterval( 0 ); // 0 for off, 1 for 60fps
+	glfwSwapInterval( 1 ); // 0 for off, 1 for 60fps
 
 
 	glewExperimental = GL_TRUE;
@@ -139,9 +139,9 @@ int main( void )
 	cam.calcOrtho2D();
 
 
-	Terrain terrain;
+	/*Terrain terrain;
 
-	terrain.loadHeightMap( "images/terrain2.bmp" );
+	terrain.loadHeightMap( "images/terrain2.bmp" );*/
 
 	//terrain.loadHeightMap( "/content/images/terrain3.png" );
 
@@ -157,18 +157,18 @@ int main( void )
 	glBindBuffer( GL_ARRAY_BUFFER, vbo3 );*/
 
 
-	Skybox skybox;
-	skybox.loadSkybox();
+	/*Skybox skybox;
+	skybox.loadSkybox();*/
 
 	/*ModelInstance box;
 	box.asset = AssetManager::getInstance().loadBoxAsset();
 	box.transform = glm::mat4();
 	//g_Instances.push_back( box );*/
 
-	ModelInstance testModel;
+	/*ModelInstance testModel;
 	testModel.asset = AssetManager::getInstance().loadFile( "models/trees/oak/tree_oak.obj" );//"/models/thor/thor.obj" );//"models/chair/chair.obj" );// ////"models/trees/broad leaf/Broad Leaf Straight Trunk.obj" ); //
 	testModel.transform = glm::mat4();
-	g_Instances.push_back( testModel );
+	g_Instances.push_back( testModel );*/
 
 	ShaderProgram* fontshader = sm.loadShader( "ortho2d" );
 
@@ -180,38 +180,39 @@ int main( void )
 	while( running )
 	{
 		double curTime = glfwGetTime();
-		double trueTime = curTime - oldTime;
+		double frameTime = curTime - oldTime;
 		oldTime = curTime;
+
 		glClearColor( 0.f, 0.f, 0.f, 1.f );
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 		cam.update( window );
 
-		skybox.render( &cam );
+		//skybox.render( &cam );
 
-		terrain.render( &cam );
+		//terrain.render( &cam );
 
 		glEnable( GL_DEPTH_TEST );
 
-		std::list<ModelInstance>::const_iterator it;
+		/*std::list<ModelInstance>::const_iterator it;
 		for(it = g_Instances.begin(); it != g_Instances.end(); ++it)
 		{
 		    RenderInstance(*it);
-		}
+		}*/
 
 		glDisable( GL_DEPTH_TEST );
 
 		//TEXT ALWAYS LAST!
 		fontshader->use();
 		fontshader->setUniform( "pMatrix", cam.getOrtho2D() );
-		font.printf( 10, 285, 8, "FPS: %f", 1 / trueTime );
+		font.printf( 10, 285, 8, "FPS: %f", 1 / frameTime );
 		//font.printf( 10, 250, 24, "FPS: %f", 1 / trueTime );
 
 		glEnable( GL_DEPTH_TEST );
 		
+		
 		glfwSwapBuffers( window );
 		glfwPollEvents();
-		
 		running = !glfwGetKey( window, GLFW_KEY_ESCAPE ) && glfwWindowShouldClose( window ) == false;
 	}
 

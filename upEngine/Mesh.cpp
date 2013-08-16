@@ -70,6 +70,7 @@ bool Mesh::loadMesh( const std::string& sPath )
 		glBindVertexArray( _uiVAO );
 		initFromScene( pScene, sPath );
 		glBindVertexArray( NULL );
+		importer.FreeScene();
 	}
 	else
 	{

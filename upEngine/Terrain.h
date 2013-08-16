@@ -19,23 +19,13 @@ class Terrain
 {
 public:
 	Terrain();
+	~Terrain();
 	void loadHeightMap( std::string sPath );
 	void render( Camera* cam );
 
 	GLuint _uiVAO;
 
 private:
-	void _initialize();
-
-	//float terrain[MAP_X][MAP_Z][3];
-	//float normals[MAP_X][MAP_Z][3];
-
-	/*std::vector<std::vector<std::vector<float>>> _terrain;
-	std::vector<std::vector<std::vector<float>>> _normals;*/
-
-	float* _terrain;
-	float* _normals;
-
 	ShaderProgram* _textureShader;
 	Texture _grassTexture;
 
