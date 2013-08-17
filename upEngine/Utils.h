@@ -3,7 +3,11 @@
 #define PI 3.14159265
 typedef unsigned char BYTE;
 
+#ifdef _WIN32
 #include <direct.h>
+#else
+#include <unistd.h>
+#endif
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>

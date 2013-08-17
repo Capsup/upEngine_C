@@ -1,7 +1,7 @@
 #pragma once
 
 #include <GL/glew.h>
-#include <GL/SOIL.h>
+#include <SOIL/SOIL.h>
 #include <glm/glm.hpp>
 #include <string>
 #include <vector>

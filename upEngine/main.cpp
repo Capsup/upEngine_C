@@ -12,8 +12,8 @@
 #include <iostream>
 
 #include <GL/glew.h>
-#include <GL/glfw3.h>
-#include <GL/SOIL.h>
+#include <GLFW/glfw3.h>
+#include <SOIL/SOIL.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
