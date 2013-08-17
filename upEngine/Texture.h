@@ -1,8 +1,8 @@
 #pragma once
 
 #include <GL/glew.h>
-//#include <GL/SOIL.h>
-#include <GL/FreeImage.h>
+//#include <SOIL/SOIL.h>
+#include <FreeImage.h>
 #include <string>
 #include "Utils.h"
 

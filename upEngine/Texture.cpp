@@ -59,7 +59,7 @@ void Texture::loadFile( std::string sPath )
 
 	if( fif == FIF_UNKNOWN )
 	{
-		printf( "ERROR! Failed to figure out filetype of file: '%s' \n", sPath );
+		printf( "ERROR! Failed to figure out filetype of file: '%s' \n", sPath.c_str() );
 		return;
 	}
 
@@ -67,7 +67,7 @@ void Texture::loadFile( std::string sPath )
 		dib = FreeImage_Load( fif, Utils::contentPath( sPath ).c_str() );
 	else
 	{
-		printf( "ERROR! Failed to load image file: '%s' \n", sPath );
+		printf( "ERROR! Failed to load image file: '%s' \n", sPath.c_str() );
 		return;
 	}
 
@@ -83,7 +83,7 @@ void Texture::loadFile( std::string sPath )
 
 	if( _pData == NULL || _iWidth == 0 || _iHeight == 0 )
 	{
-		printf( "ERROR! Failed to load image file: '%s' \n", sPath );
+		printf( "ERROR! Failed to load image file: '%s' \n", sPath.c_str() );
 		return;
 	}
 

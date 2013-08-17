@@ -12,10 +12,10 @@ Terrain::~Terrain()
 
 void Terrain::loadHeightMap( std::string sPath )
 {
-	int width, height, channels;
-	BYTE* bDataPointer = SOIL_load_image( Utils::contentPath( sPath ).c_str(), &width, &height, &channels, SOIL_LOAD_RGB );
+	//int width, height, channels;
+	//BYTE* bDataPointer = SOIL_load_image( Utils::contentPath( sPath ).c_str(), &width, &height, &channels, SOIL_LOAD_RGB );
 
-	/*FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
+	FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
 	FIBITMAP* dib(0);
 	
 	fif = FreeImage_GetFileType( Utils::contentPath( sPath ).c_str(), 0 );
@@ -45,7 +45,7 @@ void Terrain::loadHeightMap( std::string sPath )
 		return;
 	}
 
-	int width = FreeImage_GetWidth( dib ), height = FreeImage_GetHeight( dib );*/
+	int width = FreeImage_GetWidth( dib ), height = FreeImage_GetHeight( dib );
 
 	//Create terrain data
 	float* p_fData = new float[ width * height * 3 ];

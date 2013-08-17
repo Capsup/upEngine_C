@@ -45,7 +45,8 @@ bool Shader::loadSource( const char* p_cPath, unsigned int uiType )
 	long int size;
 	char* content;
  
-	fopen_s( &file, p_cPath, "r" );
+	//fopen_s( &file, p_cPath, "r" );
+	file = fopen( p_cPath, "r" );
 
 	if( file == NULL )
 		return NULL;
