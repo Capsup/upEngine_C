@@ -24,14 +24,15 @@ public:
 	void printf( int iPosX, int iPosY, int iPixelSize, char* p_cText, ... );
 	void setShader( ShaderProgram* progShader );
 
+	bool isLoaded();
 private:
 	void createChar( int iCharID );
 	//void createChar2( int iCharID );
 
 	FT_Library _FTLib;
 	FT_Face _FTFace;
-	GLuint _uiVAO;
-	GLuint _uiVBO;
+	GLuint _uiVAO, _uiVBO;
+	bool bLoaded;
 	Texture _tCharTextures[256];
 	int _iAdvX[256], _iAdvY[256];
 	int _iBearingX[256], _iBearingY[256];

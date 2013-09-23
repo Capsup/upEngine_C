@@ -93,36 +93,32 @@ void Mesh::initFromScene( const aiScene* pScene, const std::string& sPath )
 	}
 	
 	initMaterials( pScene, sPath );
-	
 }
 
-void Mesh::initMesh( unsigned int uiIndex, const aiMesh* paiMesh )
+void Mesh::initMesh( const unsigned int uiIndex, const aiMesh* p_aiMesh )
 {
-	_vEntries[uiIndex]._materialIndex = paiMesh->mMaterialIndex;
+	_vEntries[uiIndex]._materialIndex = p_aiMesh->mMaterialIndex;
 
 	std::vector<Vertex> vVertices;
 	std::vector<unsigned int> vIndices;
 
 	const aiVector3D Zero3D( 0.0f, 0.0f, 0.0f );
 
-	for( int i = 0; i < paiMesh->mNumVertices; i++ )
+	for( int i = 0; i < p_aiMesh->mNumVertices; i++ )
 	{
-		const aiVector3D* v3Pos = &(paiMesh->mVertices[i] );
-		const aiVector3D* v3Normal = &(paiMesh->mNormals[i] );
-		const aiVector3D* v3TexCoord = paiMesh->HasTextureCoords( 0 ) ? &(paiMesh->mTextureCoords[0][i]) : &Zero3D;
+		const aiVector3D* v3Pos = &(p_aiMesh->mVertices[i] );
+		const aiVector3D* v3Normal = &(p_aiMesh->mNormals[i] );
+		const aiVector3D* v3TexCoord = p_aiMesh->HasTextureCoords( 0 ) ? &(p_aiMesh->mTextureCoords[0][i]) : &Zero3D;
 
-		Vertex v( 
-			glm::vec3( v3Pos->x, v3Pos->y, v3Pos->z ),
-			glm::vec2( v3TexCoord->x, v3TexCoord->y ),
-			glm::vec3( v3Normal->x, v3Normal->y, v3Normal->z ) 
-			);
+		Vertex v( glm::vec3( v3Pos->x, v3Pos->y, v3Pos->z ), glm::vec2( v3TexCoord->x, v3TexCoord->y ), glm::vec3( v3Normal->x, v3Normal->y, v3Normal->z ) );
 
 		vVertices.push_back( v );
 	}
 
-	for( int i = 0; i < paiMesh->mNumFaces; i++ )
+	for( int i = 0; i < p_aiMesh->mNumFaces; i++ )
 	{
-		const aiFace& Face = paiMesh->mFaces[i];
+		const aiFace& Face = p_aiMesh->mFaces[i];
+
 		if( Face.mNumIndices != 3 )
 		{
 			printf( "ERROR! Number of indices for face was not 3.\n" );
@@ -164,7 +160,7 @@ void Mesh::initMaterials( const aiScene* pScene, const std::string& sPath )
 				std::string sFullPath = sDir + "/" + Path.data;
 				_vTextures[i] = new Texture( sFullPath );
 				
-				if( !_vTextures[i]->isLoaded() )
+				if( _vTextures[i] == NULL || !_vTextures[i]->isLoaded() )
 				{
 					printf( "ERROR! Failed to load texture: %s \n", sFullPath.c_str() );
 					delete _vTextures[i];
@@ -194,6 +190,7 @@ void Mesh::render(ShaderProgram* pShader)
 		glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0 );
 		glVertexAttribPointer( 1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*) sizeof(glm::vec3) );
 		glVertexAttribPointer( 2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*) (sizeof(glm::vec3) + sizeof(glm::vec2)) );
+		glBindBuffer( GL_ARRAY_BUFFER, NULL );
 
 		glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, _vEntries[i]._uiEBO );
 
@@ -201,8 +198,13 @@ void Mesh::render(ShaderProgram* pShader)
 
 		if( uiMaterialIndex < _vTextures.size() && _vTextures[uiMaterialIndex] != NULL )
 			_vTextures[uiMaterialIndex]->bindTexture();
-		
+		//glEnable( GL_BLEND );
+		glDisable( GL_CULL_FACE );
+		//glDisable( GL_DEPTH_TEST );
+		//glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 		glDrawElements( GL_TRIANGLES, _vEntries[i]._numIndices, GL_UNSIGNED_INT, 0 );
+		//glEnable( GL_DEPTH_TEST );
+		//glDisable( GL_BLEND );
 	}
 
 	glDisableVertexAttribArray( 0 );

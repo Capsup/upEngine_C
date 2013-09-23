@@ -24,7 +24,7 @@ struct Vertex
 
 	}
 
-	Vertex(const glm::vec3& pos, const glm::vec2& tex, const glm::vec3& normal)
+	Vertex( const glm::vec3& pos, const glm::vec2& tex, const glm::vec3& normal )
     {
         _pos    = pos;
         _tex    = tex;
@@ -39,21 +39,21 @@ public:
 	~Mesh();
 
 	bool loadMesh( const std::string& sPath );
-	void render(ShaderProgram* pShader);
+	void render( ShaderProgram* pShader );
 
 private:
 	void initFromScene( const aiScene* pScene, const std::string& sPath );
-	void initMesh( unsigned int uiIndex, const aiMesh* paiMesh );
+	void initMesh( const unsigned int uiIndex, const aiMesh* paiMesh );
     void initMaterials( const aiScene* pScene, const std::string& sPath );
     void clear();
 
-	struct MeshEntry {
+	struct MeshEntry 
+	{
         MeshEntry();
 
         ~MeshEntry();
 
-        void init(const std::vector<Vertex>& vVertices,
-                  const std::vector<unsigned int>& vIndices);
+        void init( const std::vector<Vertex>& vVertices, const std::vector<unsigned int>& vIndices );
 
         GLuint _uiVBO;
         GLuint _uiEBO;

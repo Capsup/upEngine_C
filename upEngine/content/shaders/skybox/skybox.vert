@@ -5,10 +5,10 @@ layout( location = 1 ) in vec2 texCoords;
 
 out vec2 Texcoords;
 
-uniform mat4 mvpMatrix;
+uniform mat4 wvpMatrix;
 
 void main() 
 {
-	gl_Position = ( mvpMatrix * vec4( position, 1.0 ) ).xyww;
+	gl_Position = ( wvpMatrix * vec4( position, 1.0 ) ).xyww;
 	Texcoords = texCoords;
 }

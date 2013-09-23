@@ -7,11 +7,11 @@ in vec2 texCoords;
 
 out vec2 Texcoords;
 
-uniform mat4 mvMatrix;
+uniform mat4 wvMatrix;
 uniform mat4 pMatrix;
 
 void main() 
 {
-	gl_Position = pMatrix * mvMatrix * vec4( position, 0.0, 1.0 );
+	gl_Position = pMatrix * wvMatrix * vec4( position, 0.0, 1.0 );
 	Texcoords = texCoords;
 }

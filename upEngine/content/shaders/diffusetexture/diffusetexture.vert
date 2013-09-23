@@ -7,12 +7,12 @@ layout( location = 2 ) in vec3 Normal;
 out vec2 TexCoord0;
 out vec3 Normal0;
 
-uniform mat4 g_mvpMatrix;
-uniform mat4 g_viewMatrix;
+uniform mat4 g_wvpMatrix;
+uniform mat4 g_worldMatrix;
 
 void main() 
 {
-	gl_Position = g_mvpMatrix * vec4( Position, 1.0 );
+	gl_Position = g_wvpMatrix * vec4( Position, 1.0 );
 	TexCoord0 = TexCoord;
-	Normal0 = ( g_viewMatrix * vec4( Normal, 0.0 ) ).xyz;
+	Normal0 = ( g_worldMatrix * vec4( Normal, 0.0 ) ).xyz;
 }

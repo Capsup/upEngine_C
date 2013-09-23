@@ -1,13 +1,9 @@
 #pragma once
 
 #include <GL/glew.h>
-//#include <GL/SOIL.h>
 #include <GL/FreeImage.h>
 #include <string>
 #include "Utils.h"
-
-
-//static std::string a_sAllowedExt[] = { "bmp", "png", "jpg", "tga", "dds", "psd", "hdr" };
 
 enum ETextureFiltering
 {
@@ -22,8 +18,9 @@ enum ETextureFiltering
 
 enum ETextureWrapping
 {
-	TEXTURE_WRAPPING_CLAMP_EDGE = 0,
-	TEXTURE_WRAPPING_CLAMP_BORDER,
+	//If you're wondering about which clamp to use, it's most likely edge..
+	TEXTURE_WRAPPING_CLAMP_EDGE = 0, //Forces it to only sample pixels from the actual texture, I.E. in a skybox there won't be black lines appearing between textures.
+	TEXTURE_WRAPPING_CLAMP_BORDER, //
 	TEXTURE_WRAPPING_REPEAT,
 };
 
@@ -35,18 +32,17 @@ public:
 	~Texture();
 
 	void bindTexture( int iTextureUnit = 0 );
-	void createFromData( BYTE* p_bData, int iWidth, int iHeight, GLenum format, bool bGenMipMaps );
+	void createFromData( BYTE* p_bData, int iWidth, int iHeight, GLenum format, bool bGenMipMaps = false );
+	void createFromSettings( BYTE* p_bData, GLenum format, int iWidth, int iHeight, GLenum type, bool bGenMipmaps = false );
 	BYTE* getData();
+	GLuint getID();
 	bool isLoaded();
 	bool loadTexture( std::string sPath, bool bGenMipmaps = false );
 	bool loadTexture( char* p_cPath, bool bGenMipmaps = false );
-	void loadFile( std::string sPath );
+	BYTE* loadFile( std::string sPath );
 	void releaseTexture();
 	void setFiltering( int iMinification, int iMagnification );
 	void setWrapping( int iSWrapping, int iTWrapping );
-
-	/*static bool isValidFile( char* p_cPath );
-	static bool isValidFile( std::string sPath );*/
 
 private:
 	int _iWidth, _iHeight, _iChannels;

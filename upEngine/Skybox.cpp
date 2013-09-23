@@ -166,8 +166,8 @@ void Skybox::render( Camera* cam )
 	glBindVertexArray( _uiVAO );
 	_skyboxShader->use();
 
-	glm::mat4 mvp = cam->getProjectionMatrix() * ( glm::translate( cam->getLookAt(), cam->getEyePos() ) ) * glm::mat4(1.f);
-	_skyboxShader->setUniform( "mvpMatrix", mvp );
+	glm::mat4 mvp = cam->getProjectionMatrix() * ( glm::translate( cam->getViewMatrix(), cam->getEyePos() ) ) * glm::mat4(1.f);
+	_skyboxShader->setUniform( "wvpMatrix", mvp );
 
 	glDisable( GL_DEPTH_TEST );
 	for( int i = 0; i < 6; i++ )

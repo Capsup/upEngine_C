@@ -1,0 +1,210 @@
+
+newmtl Material.000001
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+d 1
+Ns 4
+map_Kd cm_combined_buildings_a_1.dds
+
+
+newmtl Material.000019
+Ka 0 0 0
+Kd 0.4 0.4 0.4
+Ks 0 0 0
+d 1
+Ns 0
+
+newmtl Material.000645
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+d 1
+Ns 4
+map_Kd cm_combined_buildings_a_1.dds
+
+
+newmtl Material.002b57
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+d 1
+Ns 4
+map_Kd cm_combined_roofs_a_1.dds
+
+
+newmtl Material.002dd5
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+d 1
+Ns 4
+map_Kd cm_combined_buildings_a_1.dds
+
+
+newmtl Material.002e19
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+d 1
+Ns 4
+map_Kd cm_combined_alpha_a_1.dds
+
+
+newmtl Material.002e5d
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+d 1
+Ns 4
+map_Kd cm_combined_alpha_a_1.dds
+
+
+newmtl Material.002ec3
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+d 1
+Ns 4
+map_Kd cm_combined_buildings_a_1.dds
+
+
+newmtl Material.002edb
+Ka 0 0 0
+Kd 0.4 0.4 0.4
+Ks 0 0 0
+d 1
+Ns 0
+
+newmtl Material.003475
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+d 1
+Ns 4
+map_Kd cm_combined_roofs_a_1.dds
+
+
+newmtl Material.003539
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+d 1
+Ns 4
+map_Kd cm_combined_buildings_a_1.dds
+
+
+newmtl Material.004b24
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+d 1
+Ns 4
+map_Kd cm_combined_buildings_a_1.dds
+
+
+newmtl Material.004b68
+Ka 1 1 1
+Kd 1 1 1
+Ks 1 1 1
+d 1
+Ns 4
+map_Kd cm_combined_alpha_a_1.dds
+
+
+newmtl Material.004bce
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+d 1
+Ns 4
+map_Kd cm_combined_alpha_a_1.dds
+
+
+newmtl Material.004c12
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+d 1
+Ns 4
+map_Kd cm_combined_buildings_a_1.dds
+
+
+newmtl Material.004c2a
+Ka 0 0 0
+Kd 0.4 0.4 0.4
+Ks 0 0 0
+d 1
+Ns 0
+
+newmtl Material.004dca
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+d 1
+Ns 4
+map_Kd cm_combined_roofs_a_1.dds
+
+
+newmtl Material.004e19
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+d 1
+Ns 4
+map_Kd cm_combined_buildings_a_1.dds
+
+
+newmtl Material.005b35
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+d 1
+Ns 4
+map_Kd cm_combined_buildings_a_1.dds
+
+
+newmtl Material.005b79
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+d 1
+Ns 4
+map_Kd cm_combined_roofs_a_1.dds
+
+
+newmtl Material.005ba0
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+d 1
+Ns 4
+map_Kd cm_combined_buildings_a_1.dds
+
+
+newmtl Material.005ec8
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+d 1
+Ns 4
+map_Kd cm_combined_buildings_a_1.dds
+
+
+newmtl Material.005f0c
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+d 1
+Ns 4
+map_Kd cm_combined_roofs_a_1.dds
+
+
+newmtl Material.005f33
+Ka 1 1 1
+Kd 1 1 1
+Ks 0 0 0
+d 1
+Ns 4
+map_Kd cm_combined_buildings_a_1.dds
+

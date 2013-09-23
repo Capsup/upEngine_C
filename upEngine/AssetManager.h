@@ -49,13 +49,9 @@ public:
 	
 private:
 	AssetManager();
-
-	//ModelAsset* loadObjFile( std::string sPath );
-	//std::vector<std::string> split( std::string sString, std::string sTab );
 	
 	void operator=( AssetManager const& );
 
 	std::map<std::string, ModelAsset*> _assetList;
-	
 };
 

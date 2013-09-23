@@ -17,12 +17,12 @@ class Shader
 {
 public:
 	Shader();
-	Shader( char* p_cPath, unsigned int uiType );
+	Shader( const char* p_cPath, const unsigned int uiType );
 
-	bool loadShader( char* p_cPath, unsigned int uiType );
-	bool loadShader( std::string sPath, unsigned int uiType );
+	bool loadShader( const char* p_cPath, const unsigned int uiType );
+	bool loadShader( const std::string sPath, const unsigned int uiType );
 
-	bool loadSource( const char* p_cPath, unsigned int uiType );
+	bool loadSource( const char* p_cPath, const unsigned int uiType );
 
 	bool isLoaded();
 	void deleteShader();
@@ -46,9 +46,12 @@ public:
 	void stopUsing();
 	GLuint getProgramID();
 
-	void setUniform( std::string sName, const glm::mat4 m4Matrix );
-	void setUniform( std::string sName, const GLint iInteger );
-	void setUniform( std::string sName, const DirectionalLight& Light );
+	void setUniform( const std::string sName, const glm::vec3 v3Vector );
+	void setUniform( const std::string sName, const glm::vec4 v4Vector );
+	void setUniform( const std::string sName, const glm::mat4 m4Matrix );
+	void setUniform( const std::string sName, const GLint iInteger );
+	void setUniform( const std::string sName, const GLfloat fFloat );
+	void setUniform( const std::string sName, const DirectionalLight& Light );
 
 	std::string sName;
 

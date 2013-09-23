@@ -11,9 +11,23 @@ ShaderProgram* ShaderManager::loadShader( std::string sShaderName )
 	ShaderProgram* program = new ShaderProgram();
 	Shader shaderVertex;
 	Shader shaderFragment;
+	if( !shaderVertex.loadShader( Utils::contentPath( std::string( "shaders/" + sShaderName + "/" + sShaderName + ".vert" ) ), GL_VERTEX_SHADER )
+		|| !shaderFragment.loadShader( Utils::contentPath( std::string( "shaders/" + sShaderName + "/" + sShaderName + ".frag" ) ), GL_FRAGMENT_SHADER ) )
+	{
+		return NULL;
+	}
 
-	shaderVertex.loadShader( Utils::contentPath( std::string( "shaders/" + sShaderName + "/" + sShaderName + ".vert" ) ), GL_VERTEX_SHADER );
-	shaderFragment.loadShader( Utils::contentPath( std::string( "shaders/" + sShaderName + "/" + sShaderName + ".frag" ) ), GL_FRAGMENT_SHADER );
+	FILE* file;
+
+	file = fopen( Utils::contentPath( std::string( "shaders/" + sShaderName + "/" + sShaderName + ".geom" ) ).c_str(), "r" );
+	if( file != NULL )
+	{
+		Shader shaderGeometry;
+		if( !shaderGeometry.loadShader( Utils::contentPath( std::string( "shaders/" + sShaderName + "/" + sShaderName + ".geom" ) ), GL_GEOMETRY_SHADER ) )
+			return NULL;
+		program->attachShader( &shaderGeometry );
+	}
+
 
 	program->attachShader( &shaderVertex );
 	program->attachShader( &shaderFragment );

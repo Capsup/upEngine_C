@@ -1,11 +1,5 @@
 #include "FreeTypeFont.h"
 
-#ifdef _DEBUG
-#pragma comment( lib, "freetype250_D.lib" )
-#else
-#pragma comment( lib, "freetype2410.lib" )
-#endif
-
 
 FreeTypeFont::FreeTypeFont()
 {
@@ -25,7 +19,10 @@ void FreeTypeFont::loadFont( std::string sPath, int iSize )
 	bError = FT_New_Face( _FTLib, std::string( "C:\\Windows\\Fonts\\arial.ttf" ).c_str(), 0, &_FTFace );
 	
 	if( bError )
+	{
+		std::printf( "ERROR! Failed to load font: %s\n", "C:\\Windows\\Fonts\\arial.ttf" );
 		return;
+	}
 
 	FT_Set_Pixel_Sizes( _FTFace, iSize, iSize );
 	_iPixelSize = iSize;
@@ -88,6 +85,7 @@ void FreeTypeFont::createChar( int iCharID )
 
 	for( int i = 0; i < 1; i++ )
 	{
+		//TODO: Fix this, taking the memory address of a temporary object and storing it for later use is BAD.
 		_vboData.addData( &glm::vec2( 0.f, float( -_iAdvY[ iCharID ] + iNHeight ) ), sizeof( glm::vec2 ) );
 		_vboData.addData( &glm::vec2( 0.f, 1.f ), sizeof( glm::vec2 ) );
 
@@ -130,7 +128,7 @@ void FreeTypeFont::print( std::string sText, int iPosX, int iPosY, int iPixelSiz
 			_tCharTextures[ iIndex ].bindTexture();
 			glm::mat4 m4ModelView = glm::translate( glm::mat4( 1.f ), glm::vec3( float( iCurX ), float( iCurY ), 0.f ) );
 			m4ModelView = glm::scale( m4ModelView, glm::vec3( fScale ) );
-			_progShader->setUniform( "mvMatrix", m4ModelView );
+			_progShader->setUniform( "wvMatrix", m4ModelView );
 
 			glDrawArrays( GL_TRIANGLE_STRIP, iIndex * 4, 4 );
 		}

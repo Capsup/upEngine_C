@@ -12,10 +12,10 @@ Terrain::~Terrain()
 
 void Terrain::loadHeightMap( std::string sPath )
 {
-	int width, height, channels;
-	BYTE* bDataPointer = SOIL_load_image( Utils::contentPath( sPath ).c_str(), &width, &height, &channels, SOIL_LOAD_RGB );
+	/*int width, height, channels;
+	BYTE* bDataPointer = SOIL_load_image( Utils::contentPath( sPath ).c_str(), &width, &height, &channels, SOIL_LOAD_RGB );*/
 
-	/*FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
+	FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
 	FIBITMAP* dib(0);
 	
 	fif = FreeImage_GetFileType( Utils::contentPath( sPath ).c_str(), 0 );
@@ -45,7 +45,7 @@ void Terrain::loadHeightMap( std::string sPath )
 		return;
 	}
 
-	int width = FreeImage_GetWidth( dib ), height = FreeImage_GetHeight( dib );*/
+	int width = FreeImage_GetWidth( dib ), height = FreeImage_GetHeight( dib );
 
 	//Create terrain data
 	float* p_fData = new float[ width * height * 3 ];
@@ -185,7 +185,7 @@ void Terrain::loadHeightMap( std::string sPath )
 	glEnableVertexAttribArray( normAttrib );
 	glVertexAttribPointer( normAttrib, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*) (5 * sizeof( float ) ) );
 
-	///And last but not least, load the texture to slap onto the terrain.
+	//And last but not least, load the texture to slap onto the terrain.
 	_grassTexture.loadTexture( "images/green.bmp", false );
 	
 	glBindVertexArray( NULL );
@@ -203,16 +203,16 @@ void Terrain::render( Camera* cam )
 
 	_textureShader->use();
 
-	glm::mat4 mvp = cam->getViewProjectionMatrix() * glm::mat4(1.f);
+	glm::mat4 mvp = cam->getViewProjectionMatrix() * cam->getWorldMatrix();
 	glm::mat4 projection = cam->getProjectionMatrix();
-	_textureShader->setUniform( "g_mvpMatrix", mvp );
-	_textureShader->setUniform( "g_viewMatrix", projection );
+	_textureShader->setUniform( "g_wvpMatrix", mvp );
+	_textureShader->setUniform( "g_worldMatrix", cam->getWorldMatrix() );
 	_textureShader->setUniform( "g_Sampler", 0 );
 	DirectionalLight light;
 	light.fAmbientIntensity = 0.1f;
 	light.fDiffuseIntensity = 0.6f;
 	light.v3Color = glm::vec3( 1.f, 1.f, 204.f / 255.f );
-	light.v3Direction = glm::vec3( -0.659189, -0.534744, -0.528695 );
+	light.v3Direction = glm::vec3( -0.749733, -0.449180, 0.485940 );
 	_textureShader->setUniform( "g_DirectionalLight", light );
 
 	glEnable( GL_DEPTH_TEST );

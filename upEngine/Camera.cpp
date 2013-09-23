@@ -6,18 +6,15 @@ Camera::Camera()
 	_v3Origin = glm::vec3( 0.f, 0.f, 0.f );
 	_v3EyePos = glm::vec3( 0.f, 0.f, -1.f );
 	_v3Up = glm::vec3( 0.f, 1.f, 0.f );
-	_m4LookAt = glm::lookAt( _v3Origin, _v3EyePos, _v3Up );
+	_m4World = glm::mat4( 1.f );
+	_m4Projection = glm::perspective( 45.0f, 800.f / 600.f, 0.1f, 100000.f );
+	_m4View = glm::lookAt( _v3Origin, _v3EyePos, _v3Up );
 }
 
-void Camera::setLookAt( glm::mat4 m4LookAt )
+/*void Camera::setLookAt( glm::mat4 m4LookAt )
 {
 	_m4LookAt = m4LookAt;
-}
-
-glm::mat4 Camera::getLookAt()
-{
-	return _m4LookAt;
-}
+}*/
 
 void Camera::setOrigin( glm::vec3 v3Origin )
 {
@@ -26,7 +23,7 @@ void Camera::setOrigin( glm::vec3 v3Origin )
 
 glm::vec3 Camera::getOrigin()
 {
-	//TODO: Not sure if it's necessary to minus out the .z component?
+	//TODO: Not sure if it's necessary to minus out the .z component? //Apparently not!
 	return _v3Origin;
 }
 
@@ -124,7 +121,7 @@ void Camera::moveMouse( GLFWwindow* window)
 
 void Camera::apply()
 {
-	_m4LookAt = glm::lookAt( _v3Origin, _v3EyePos, _v3Up );
+	_m4View = glm::lookAt( _v3Origin, _v3EyePos, _v3Up );
 }
 
 void Camera::update( GLFWwindow* window)
@@ -135,10 +132,12 @@ void Camera::update( GLFWwindow* window)
 
 	moveMouse( window );
 
-	float fMultiplier = 10.f;
+	float fMultiplier = 1.f;
 
 	if( glfwGetKey( window, GLFW_KEY_LEFT_CONTROL ) )
-		fMultiplier = 1.f;
+		fMultiplier = 0.1f;
+	if( glfwGetKey( window, GLFW_KEY_LEFT_SHIFT ) )
+		fMultiplier = 10.f;
 
 	glm::vec3 v3Forward = glm::normalize( _v3EyePos - _v3Origin ) * fMultiplier;
 	glm::vec3 v3Strafe = glm::normalize( glm::cross( _v3EyePos - _v3Origin, _v3Up ) ) * fMultiplier;
@@ -160,12 +159,22 @@ void Camera::update( GLFWwindow* window)
 	apply();
 }
 
+glm::mat4 Camera::getWorldMatrix()
+{
+	return _m4World;
+}
+
+glm::mat4 Camera::getViewMatrix()
+{
+	return _m4View;
+}
+
 glm::mat4 Camera::getProjectionMatrix()
 {
-	return glm::perspective( 45.0f, 800.f / 600.f, 0.1f, 100000.f );
+	return _m4Projection;
 }
 
 glm::mat4 Camera::getViewProjectionMatrix()
 {
-	return glm::perspective( 45.0f, 800.f / 600.f, 0.1f, 100000.f ) * getLookAt();
+	return getProjectionMatrix() * getViewMatrix();
 }

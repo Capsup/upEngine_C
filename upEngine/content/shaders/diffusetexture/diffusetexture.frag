@@ -27,9 +27,12 @@ void main()
 	//outColor = vec4( 1.0, 1.0, 1.0, 1.0 ) * texture2D( tex, Texcoords );
 	//outColor = vec4( Texcoords.x, Texcoords.y, 1.0, 1.0 );
 	
-	vec4 v4AmbientColor = vec4( 154.f/255.f, 210.f/255.f, 255.f/255.f, 1.0f ) * g_DirectionalLight.fAmbientIntensity;
-	float fDiffuseFactor = dot( normalize( Normal0 ), -g_DirectionalLight.v3Direction );
+	vec3 v3AmbientColor = vec3( 154.f/255.f, 210.f/255.f, 255.f/255.f ) * g_DirectionalLight.fAmbientIntensity;
+	vec4 v4AmbientColor = vec4( v3AmbientColor, 1.0f );
+	vec3 v3Normal = normalize( Normal0 );
+	float fDiffuseFactor = dot( v3Normal, -g_DirectionalLight.v3Direction );
 	vec4 v4DiffuseColor;
+	vec4 v4SpecularColor;
 	
 	if( fDiffuseFactor > 0 )
 	{
@@ -40,5 +43,5 @@ void main()
 		v4DiffuseColor = vec4( 0, 0, 0, 0 );
 	}
 	
-	FragColor = texture( g_Sampler, TexCoord0.xy ) * ( v4AmbientColor + v4DiffuseColor );
+	FragColor = texture2D( g_Sampler, TexCoord0.xy ) * ( v4AmbientColor + v4DiffuseColor );
 }
