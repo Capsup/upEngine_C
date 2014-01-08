@@ -52,14 +52,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Capsup\Documents\Visual Studio 2013\Projects\upEngine\upEngine\content\bin\include;C:\Users\Capsup\Documents\Visual Studio 2012\Projects\upEngine\upEngine\content\bin\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Capsup\Documents\GitHub\upEngine\upEngine\content\bin\include;C:\Users\Capsup\Documents\Visual Studio 2012\Projects\upEngine\upEngine\content\bin\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>GLFW3.lib;opengl32.lib;glew32d.lib;glu32.lib;FreeImaged.lib;assimp.lib;freetype250_D.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\Capsup\Documents\Visual Studio 2013\Projects\upEngine\upEngine\content\bin;C:\Users\Capsup\Documents\Visual Studio 2012\Projects\upEngine\upEngine\content\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Capsup\Documents\GitHub\upEngine\upEngine\content\bin;C:\Users\Capsup\Documents\Visual Studio 2012\Projects\upEngine\upEngine\content\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
