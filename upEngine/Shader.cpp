@@ -173,6 +173,12 @@ GLuint ShaderProgram::getProgramID()
 	return _uiProgramID;
 }
 
+void ShaderProgram::setUniform( const std::string sName, const glm::vec2 v2Vector )
+{
+	GLint iLoc = glGetUniformLocation( _uiProgramID, sName.c_str() );
+	glUniform2f( iLoc, v2Vector.x, v2Vector.y );
+}
+
 void ShaderProgram::setUniform( const std::string sName, const glm::vec3 v3Vector )
 {
 	GLint iLoc = glGetUniformLocation( _uiProgramID, sName.c_str() );
@@ -205,13 +211,13 @@ void ShaderProgram::setUniform( const std::string sName, const GLfloat fFloat )
 
 void ShaderProgram::setUniform( const std::string sName, const DirectionalLight& Light )
 {
-	GLint iLoc = glGetUniformLocation( _uiProgramID, "g_DirectionalLight.v3Color" );
+	GLint iLoc = glGetUniformLocation( _uiProgramID, "dirLight.Color" );
 	glUniform3f( iLoc, Light.v3Color.r, Light.v3Color.g, Light.v3Color.b );
-	iLoc = glGetUniformLocation( _uiProgramID, "g_DirectionalLight.fAmbientIntensity" );
+	iLoc = glGetUniformLocation( _uiProgramID, "dirLight.AmbientIntensity" );
 	glUniform1f( iLoc, Light.fAmbientIntensity );
-	iLoc = glGetUniformLocation( _uiProgramID, "g_DirectionalLight.fDiffuseIntensity" );
+	iLoc = glGetUniformLocation( _uiProgramID, "dirLight.DiffuseIntensity" );
 	glUniform1f( iLoc, Light.fDiffuseIntensity );
-	iLoc = glGetUniformLocation( _uiProgramID, "g_DirectionalLight.v3Direction" );
+	iLoc = glGetUniformLocation( _uiProgramID, "dirLight.Direction" );
 	glm::vec3 v3LightNormal = glm::normalize( Light.v3Direction );
 	
 	glUniform3f( iLoc, v3LightNormal.x, v3LightNormal.y, v3LightNormal.z );

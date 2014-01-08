@@ -46,6 +46,7 @@ public:
 	void stopUsing();
 	GLuint getProgramID();
 
+	void setUniform( const std::string sName, const glm::vec2 v2Vector );
 	void setUniform( const std::string sName, const glm::vec3 v3Vector );
 	void setUniform( const std::string sName, const glm::vec4 v4Vector );
 	void setUniform( const std::string sName, const glm::mat4 m4Matrix );

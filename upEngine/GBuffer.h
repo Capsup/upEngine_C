@@ -11,7 +11,6 @@ public:
 		GBUFFER_TEXTURE_TYPE_POSITION = 0,
 		GBUFFER_TEXTURE_TYPE_DIFFUSE,
 		GBUFFER_TEXTURE_TYPE_NORMAL,
-		GBUFFER_TEXTURE_TYPE_TEXCOORD,
 		GBUFFER_NUM_TEXTURES
 	};
 
@@ -21,7 +20,7 @@ public:
 	void init( const unsigned int uiWindowWidth, const unsigned int uiWindowHeight );
 	void bindForReading();
 	void bindForWriting();
-
+	void setReadBuffer( GBUFFER_TEXTURE_TYPE TextureType );
 
 private:
 	GLuint _uiFBO;

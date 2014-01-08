@@ -40,6 +40,7 @@ void function(int flags) {
 #include "Terrain.h"
 #include "AssetManager.h"
 #include "Mesh.h"
+#include "GBuffer.h"
 
 struct ModelInstance
 {
@@ -144,7 +145,6 @@ int main()
 		glfwTerminate();
 		exit( EXIT_FAILURE );
 	}
-
 	cam.calcOrtho2D();
 
 
@@ -175,6 +175,16 @@ int main()
 	ShaderProgram* fontshader = sm.loadShader( "ortho2d" );
 	font.setShader( fontshader );
 
+	GBuffer gBuffer = GBuffer();
+	gBuffer.init( 800, 600 );
+
+	ShaderProgram* deferredShader = sm.loadShader( "deferred" );
+	ShaderProgram* directionalShader = sm.loadShader( "directionallight" );
+
+	ModelInstance quad;
+	quad.asset = AssetManager::getInstance().loadFile( "models/quad/quad.obj" );
+	quad.transform = glm::mat4();
+
 	double oldTime = glfwGetTime();
 	while( running )
 	{
@@ -183,22 +193,105 @@ int main()
 		oldTime = curTime;
 
 		glClearColor( 0.f, 0.f, 0.f, 1.f );
-		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+		//glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 		cam.update( window );
+
+		//
+
+		//
+
+		//TODO: It shouldn't be necessary to have these scattered around the place. Each rendering function should just turn either this on or off when entering.
+		//glEnable( GL_DEPTH_TEST );
+
+
+		//Geometry pass:		
+		gBuffer.bindForWriting();
+
+		glDepthMask( GL_TRUE );
+
+		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+		glEnable( GL_DEPTH_TEST );
+
+		glDisable( GL_BLEND );
 
 		skybox.render( &cam );
 
 		terrain.render( &cam );
 
-		//TODO: It shouldn't be necessary to have these scattered around the place. Each rendering function should just turn either this on or off when entering.
-		glEnable( GL_DEPTH_TEST );
+		deferredShader->use();
+		deferredShader->setUniform( "g_wvpMatrix", cam.getViewProjectionMatrix() /* cam.getWorldMatrix()*/ );
+		deferredShader->setUniform( "g_worldMatrix", cam.getWorldMatrix() );
+		deferredShader->setUniform( "g_sampler", 0 );
 
 		std::list<ModelInstance>::const_iterator it;
 		for(it = g_Instances.begin(); it != g_Instances.end(); ++it)
 		{
-		    RenderInstance(*it);
+			ModelAsset* asset = (*it).asset;
+		    //RenderInstance(*it);
+			if( asset->mesh != NULL )
+			asset->mesh->render(deferredShader);
+
+			glBindTexture( GL_TEXTURE_2D, NULL );
 		}
+		deferredShader->stopUsing();
+
+		
+
+		glDepthMask( GL_FALSE );
+
+		glDisable( GL_DEPTH_TEST );
+		//////
+
+		//Lighting pass:
+		glEnable( GL_BLEND );
+		glBlendEquation( GL_FUNC_ADD );
+		glBlendFunc( GL_ONE, GL_ONE );
+
+		//glBindFramebuffer( GL_FRAMEBUFFER, 0 );
+		gBuffer.bindForReading();
+
+		glClear( GL_COLOR_BUFFER_BIT );
+
+		/*
+			Point light stuff
+		*/
+
+		//Directional Light:
+		directionalShader->use();
+		directionalShader->setUniform( "g_PositionMap", gBuffer.GBUFFER_TEXTURE_TYPE_POSITION );
+		directionalShader->setUniform( "g_ColorMap", gBuffer.GBUFFER_TEXTURE_TYPE_DIFFUSE );
+		directionalShader->setUniform( "g_NormalMap", gBuffer.GBUFFER_TEXTURE_TYPE_NORMAL );
+		directionalShader->setUniform( "g_ScreenSize", glm::vec2( 800, 600 ) );
+		directionalShader->setUniform( "g_wvpMatrix", glm::mat4( 1.f ) );
+		directionalShader->setUniform( "g_MatSpecularIntensity", 0.1f );
+		//TODO: Make sure this isn't supposed to be origin instead
+		directionalShader->setUniform( "g_EyeWorldPos", cam.getOrigin());
+		DirectionalLight light;
+		light.fAmbientIntensity = 0.1f;
+		light.fDiffuseIntensity = 0.6f;
+		light.v3Color = glm::vec3( 1.f, 1.f, 204.f / 255.f );
+		light.v3Direction = glm::vec3( -0.749733, -0.449180, 0.485940 );
+		directionalShader->setUniform( "dirLight", light );
+		quad.asset->mesh->render( NULL );
+		directionalShader->stopUsing();
+
+		/*GLint iHalfWidth = (GLint) (800.f / 2.0f);
+		GLint iHalfHeight = (GLint) (600.f / 2.0f);
+
+		gBuffer.setReadBuffer( GBuffer::GBUFFER_TEXTURE_TYPE_POSITION );
+		glBlitFramebuffer( 0, 0, 800, 600, 0, 0, iHalfWidth, iHalfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR );
+
+		gBuffer.setReadBuffer( GBuffer::GBUFFER_TEXTURE_TYPE_DIFFUSE );
+		glBlitFramebuffer( 0, 0, 800, 600, 0, iHalfHeight, iHalfWidth, 600, GL_COLOR_BUFFER_BIT, GL_LINEAR );
+
+		gBuffer.setReadBuffer( GBuffer::GBUFFER_TEXTURE_TYPE_NORMAL );
+		glBlitFramebuffer( 0, 0, 800, 600, iHalfWidth, iHalfHeight, 800, 600, GL_COLOR_BUFFER_BIT, GL_LINEAR );
+
+		gBuffer.setReadBuffer( GBuffer::GBUFFER_TEXTURE_TYPE_TEXCOORD );
+		glBlitFramebuffer( 0, 0, 800, 600, iHalfWidth, 0, 800, iHalfHeight, GL_COLOR_BUFFER_BIT, GL_LINEAR );*/
+		////////////
 
 		glDisable( GL_DEPTH_TEST );
 

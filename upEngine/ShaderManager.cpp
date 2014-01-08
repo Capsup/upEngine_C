@@ -32,8 +32,15 @@ ShaderProgram* ShaderManager::loadShader( std::string sShaderName )
 	program->attachShader( &shaderVertex );
 	program->attachShader( &shaderFragment );
 
-	if( sShaderName == "diffusetexture" )
+	if( sShaderName == "diffusetexture" || sShaderName == "directionallight" )
 		glBindFragDataLocation( program->getProgramID(), 0, "FragColor" );
+	else if( sShaderName == "deferred" )
+	{
+		glBindFragDataLocation( program->getProgramID(), 0, "WorldSpacePos" );
+		glBindFragDataLocation( program->getProgramID(), 1, "Diffuse" );
+		glBindFragDataLocation( program->getProgramID(), 2, "Normal" );
+		glBindFragDataLocation( program->getProgramID(), 3, "TexCoord" );
+	}
 	else
 		glBindFragDataLocation( program->getProgramID(), 0, "outColor" );
 

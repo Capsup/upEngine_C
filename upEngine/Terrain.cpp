@@ -171,7 +171,7 @@ void Terrain::loadHeightMap( std::string sPath )
 	//Get instance of shadermanager and load the diffusetexture shader so we can some pretty lighting on that terrain!
 	ShaderManager sm = ShaderManager::getInstance();
 
-	_textureShader = sm.loadShader("diffusetexture");
+	_textureShader = sm.loadShader("deferred");
 
 	GLint posAttrib = glGetAttribLocation( _textureShader->getProgramID(), "Position" );
 	glEnableVertexAttribArray( posAttrib );
@@ -208,18 +208,12 @@ void Terrain::render( Camera* cam )
 	_textureShader->setUniform( "g_wvpMatrix", mvp );
 	_textureShader->setUniform( "g_worldMatrix", cam->getWorldMatrix() );
 	_textureShader->setUniform( "g_Sampler", 0 );
-	DirectionalLight light;
-	light.fAmbientIntensity = 0.1f;
-	light.fDiffuseIntensity = 0.6f;
-	light.v3Color = glm::vec3( 1.f, 1.f, 204.f / 255.f );
-	light.v3Direction = glm::vec3( -0.749733, -0.449180, 0.485940 );
-	_textureShader->setUniform( "g_DirectionalLight", light );
 
-	glEnable( GL_DEPTH_TEST );
+	//glEnable( GL_DEPTH_TEST );
 
 	glDrawElements( GL_TRIANGLES, _vertices.size() / 8 * 3, GL_UNSIGNED_INT, 0 );
 
-	glDisable( GL_DEPTH_TEST );
+	//glDisable( GL_DEPTH_TEST );
 
 	glBindVertexArray( NULL );
 	glUseProgram( NULL );
