@@ -1,0 +1,9 @@
+# Blender MTL File: 'Claycup.blend'
+# Material Count: 1
+
+newmtl Material.001
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.353913 0.054611
+Ks 0.000000 0.000000 0.000000
+map_Kd LoamWalls0046_1_thumblarge.jpg

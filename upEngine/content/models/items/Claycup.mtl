@@ -1,0 +1,6 @@
+newmtl Material
+Ka 0.000000 0.000000 0.000000
+Ns 96.078431
+Ks 0.500000 0.500000 0.500000
+Kd 0.640000 0.640000 0.640000
+map_Kd LoamWalls0046_1_thumblarge.jpg

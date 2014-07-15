@@ -162,8 +162,8 @@ int main()
 	//g_Instances.push_back( box );
 
 	ModelInstance testModel;
-	testModel.asset = AssetManager::getInstance().loadFile( "models/trees/oak/tree_oak.obj" );//"/models/buildings/blacksmith/blacksmith.obj" );//"/models/thor/thor.obj" );//"models/chair/chair.obj" );// ////"models/trees/broad leaf/Broad Leaf Straight Trunk.obj" ); //
-	testModel.transform = glm::mat4();
+	testModel.asset = AssetManager::getInstance().loadFile("models/items/Claycupfixed.obj");//"models/trees/oak/tree_oak.obj");//"/models/buildings/blacksmith/blacksmith.obj" );//"/models/thor/thor.obj" );//"models/chair/chair.obj" );// ////"models/trees/broad leaf/Broad Leaf Straight Trunk.obj" ); //
+	testModel.transform = glm::scale( glm::mat4( 1.0f ), glm::vec3( 10.f ) );
 	//TODO: Make it add instances to the global instance list automatically. Also figure out an actual system to take care of the instances instead of just a vector .. ?
 	g_Instances.push_back( testModel );
 
@@ -221,7 +221,7 @@ int main()
 		terrain.render( &cam );
 
 		deferredShader->use();
-		deferredShader->setUniform( "g_wvpMatrix", cam.getViewProjectionMatrix() /* cam.getWorldMatrix()*/ );
+		
 		deferredShader->setUniform( "g_worldMatrix", cam.getWorldMatrix() );
 		deferredShader->setUniform( "g_sampler", 0 );
 
@@ -230,8 +230,11 @@ int main()
 		{
 			ModelAsset* asset = (*it).asset;
 		    //RenderInstance(*it);
-			if( asset->mesh != NULL )
-			asset->mesh->render(deferredShader);
+			if (asset->mesh != NULL)
+			{
+				deferredShader->setUniform("g_wvpMatrix", cam.getViewProjectionMatrix() * (*it).transform /* cam.getWorldMatrix()*/);
+				asset->mesh->render(deferredShader);
+			}
 
 			glBindTexture( GL_TEXTURE_2D, NULL );
 		}
