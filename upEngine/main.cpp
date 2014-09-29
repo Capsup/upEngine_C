@@ -269,7 +269,7 @@ int main()
 		directionalShader->setUniform( "g_ScreenSize", glm::vec2( 800, 600 ) );
 		directionalShader->setUniform( "g_wvpMatrix", glm::mat4( 1.f ) );
 		directionalShader->setUniform( "g_MatSpecularIntensity", 0.1f );
-		//TODO: Make sure this isn't supposed to be origin instead
+		//TODO: Make sure this isn't supposed to be origin instead - It was :D
 		directionalShader->setUniform( "g_EyeWorldPos", cam.getOrigin());
 		DirectionalLight light;
 		light.fAmbientIntensity = 0.1f;

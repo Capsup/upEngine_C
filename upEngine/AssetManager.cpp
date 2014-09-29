@@ -113,9 +113,9 @@ ModelAsset* AssetManager::loadFile( std::string sPath )
 	if( sSupportedExtensions.find( sPath.substr( sPath.size() - 4, sPath.size() ) ) != std::string::npos )
 	{
 		Mesh* mesh = new Mesh();
-		bool bResult = mesh->loadMesh( sPath );
+		bool bLoadedProperly = mesh->loadMesh( sPath );
 
-		if( bResult )
+		if( bLoadedProperly )
 		{
 			asset = new ModelAsset();
 			asset->mesh = mesh;
